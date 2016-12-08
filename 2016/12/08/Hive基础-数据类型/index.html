@@ -1,0 +1,620 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="Hive既有大多数关系数据库中的基本类型，又有集合这种复杂类型。
+##基本类型数据类型 | 大小 | 范围 | 示例—|—|—|—TINYINT | 1byte | -128 ~ 127 | 100YSMALLINT | 2byte | -32,768 ~ 32,767 | 100SINT/INTEGER | 4byte | -2,147,483,648 ~ 2,147,483,647 | 100">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hive基础-数据类型">
+<meta property="og:url" content="http://yoursite.com/2016/12/08/Hive基础-数据类型/index.html">
+<meta property="og:site_name" content="呆子萌的">
+<meta property="og:description" content="Hive既有大多数关系数据库中的基本类型，又有集合这种复杂类型。
+##基本类型数据类型 | 大小 | 范围 | 示例—|—|—|—TINYINT | 1byte | -128 ~ 127 | 100YSMALLINT | 2byte | -32,768 ~ 32,767 | 100SINT/INTEGER | 4byte | -2,147,483,648 ~ 2,147,483,647 | 100">
+<meta property="og:updated_time" content="2016-12-08T07:42:21.453Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hive基础-数据类型">
+<meta name="twitter:description" content="Hive既有大多数关系数据库中的基本类型，又有集合这种复杂类型。
+##基本类型数据类型 | 大小 | 范围 | 示例—|—|—|—TINYINT | 1byte | -128 ~ 127 | 100YSMALLINT | 2byte | -32,768 ~ 32,767 | 100SINT/INTEGER | 4byte | -2,147,483,648 ~ 2,147,483,647 | 100">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/12/08/Hive基础-数据类型/"/>
+
+
+
+
+
+  <title> Hive基础-数据类型 | 呆子萌的 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">呆子萌的</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Startseite
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archiv
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/12/08/Hive基础-数据类型/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="呆子萌的">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.gif">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="呆子萌的">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="呆子萌的" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Hive基础-数据类型
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Veröffentlicht am</span>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-08T15:36:32+08:00">
+                2016-12-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <a href="/2016/12/08/Hive基础-数据类型/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/12/08/Hive基础-数据类型/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Hive既有大多数关系数据库中的基本类型，又有集合这种复杂类型。</p>
+<p>##基本类型<br>数据类型 | 大小 | 范围 | 示例<br>—|—|—|—<br>TINYINT | 1byte | -128 ~ 127 | 100Y<br>SMALLINT | 2byte | -32,768 ~ 32,767 | 100S<br>INT/INTEGER | 4byte | -2,147,483,648 ~ 2,147,483,647 | 100<br>BIGINT | 8byte |  -9,223,372,036,854,775,808 ~  9,223,372,036,854,775,807 | 100L<br>FLOAT | 4byte | 单精度浮点数 | 3.1415926<br>DOUBLE | 8byte | 双精度浮点数 | 3.1415926<br>DECIMAL | - | 高精度浮点数 | DECIMAL(9,8)<br>BOOLEAN | - | 布尔型，TRUE/FALSE | true<br>BINARY | - | 二进制类型 | -</p>
+<p>###数字类型</p>
+<p>####整数类型<br>-2,147,483,648 ~ 2,147,483,647之间的整数类型默认是INT型，除非指定了格式100Y、100S、100L会自动转换为TINYINT、SMALLINT、BIGINT</p>
+<p>####浮点数类型<br>浮点数默认会当作DOUBLE型；<br>Hive中的DECIMAL基于Java中的BigDecimal，BigDecimal用于表示任意精度的不可修改的十进制数字；<br>DECIMAL不指定精度时默认为DECIMAL(10,0)；</p>
+<p>###字符串类型<br><strong>String</strong><br>string类型可以用单引号（’）或双引号（”）定义，Hive在string中使用C-style。<br><strong>Varchar</strong><br>varchar类型由长度定义，范围为1-65355，如果存入的字符串长度超过了定义的长度，超出部分会被截断。尾部的空格也会作为字符串的一部分，影响字符串的比较。<br><strong>Char</strong><br>char是固定长度的，最大长度255，而且尾部的空格不影响字符串的比较。<br>三种类型对尾部空格的区别，参考如下例子，每个字段都插入同样的字符并且在尾部有不同的空格。<br> <figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">create</span> <span class="keyword">table</span> char_a (c1 <span class="built_in">char</span>(<span class="number">4</span>),c2 <span class="built_in">char</span>(<span class="number">5</span>),str1 <span class="keyword">string</span>,str2 <span class="keyword">string</span>,var1 <span class="built_in">varchar</span>(<span class="number">4</span>),var2 <span class="built_in">varchar</span>(<span class="number">6</span>));</div><div class="line"><span class="keyword">insert</span> <span class="keyword">into</span> char_a <span class="keyword">values</span>(<span class="string">'ccc '</span>,<span class="string">'ccc  '</span>,<span class="string">'ccc '</span>,<span class="string">'ccc    '</span>,<span class="string">'ccc '</span>,<span class="string">'ccc   '</span>);</div><div class="line"><span class="keyword">select</span> c1=c2,str1=str2,var1=var2 <span class="keyword">from</span> char_a;</div><div class="line"></div><div class="line">OK</div><div class="line">true	false	false</div><div class="line">Time taken: 1.101 seconds, Fetched: 1 row(s)</div></pre></td></tr></table></figure></p>
+<p>###日期与时间戳<br><strong>Timestamps</strong><br>timestamp表示UTC时间，可以是以秒为单位的整数；带精度的浮点数，最大精确到小数点后9位，纳秒级；java.sql.Timestamp格式的字符串 YYYY-MM-DD hh:mm:ss.fffffffff<br><strong>Date</strong><br>Hive中的Date只支持YYYY-MM-DD格式的日期，其余写法都是错误的，如需带上时分秒，请使用timestamp</p>
+<p>##复杂类型<br><strong>STRUCT</strong><br>类似于C、C#语言，Hive中定义的struct类型也可以使用点来访问。从文件加载数据时，文件里的数据分隔符要和建表指定的一致。<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">CREATE TABLE IF NOT EXISTS person_1 (id int,info struct&lt;name:string,country:string&gt;)  </div><div class="line">ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' </div><div class="line">COLLECTION ITEMS TERMINATED BY ':' </div><div class="line">STORED AS TEXTFILE;</div><div class="line"></div><div class="line">创建一个文本文件test_struct.txt</div><div class="line">1,'dd':'jp'</div><div class="line">2,'ee':'cn'</div><div class="line">3,'gg':'jp'</div><div class="line">4,'ff':'cn'</div><div class="line">5,'tt':'jp'</div><div class="line"></div><div class="line">导入数据</div><div class="line">LOAD DATA LOCAL INPATH '/data/test_struct.txt' OVERWRITE INTO TABLE person_1;</div><div class="line"></div><div class="line">查询数据</div><div class="line">hive&gt; select * from person_1;</div><div class="line">OK</div><div class="line">1	&#123;"name":"'dd'","country":"'jp'"&#125;</div><div class="line">2	&#123;"name":"'ee'","country":"'cn'"&#125;</div><div class="line">3	&#123;"name":"'gg'","country":"'jp'"&#125;</div><div class="line">4	&#123;"name":"'ff'","country":"'cn'"&#125;</div><div class="line">5	&#123;"name":"'tt'","country":"'jp'"&#125;</div><div class="line">Time taken: 0.046 seconds, Fetched: 5 row(s)</div><div class="line"></div><div class="line">hive&gt; select id,info.name,info.country from person_1 where info.name='dd';</div><div class="line">OK</div><div class="line">1	dd	jp</div><div class="line">Time taken: 1.166 seconds, Fetched: 1 row(s)</div></pre></td></tr></table></figure></p>
+<p><strong>ARRAY</strong><br>ARRAY表示一组相同数据类型的集合，下标从零开始，可以用下标访问<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">CREATE TABLE IF NOT EXISTS array_1 (id int,name array&lt;STRING&gt;)</div><div class="line">ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' </div><div class="line">COLLECTION ITEMS TERMINATED BY ':' </div><div class="line">STORED AS TEXTFILE;</div><div class="line"></div><div class="line">导入数据</div><div class="line">LOAD DATA LOCAL INPATH '/data/test_array.txt' OVERWRITE INTO TABLE array_1;</div><div class="line"></div><div class="line">查询数据</div><div class="line">hive&gt; select * from array_1;</div><div class="line">OK</div><div class="line">1	["dd","jp"]</div><div class="line">2	["ee","cn"]</div><div class="line">3	["gg","jp"]</div><div class="line">4	["ff","cn"]</div><div class="line">5	["tt","jp"]</div><div class="line">Time taken: 0.041 seconds, Fetched: 5 row(s)</div><div class="line"></div><div class="line">hive&gt; select id,name[0],name[1] from array_1 where name[1]='cn';</div><div class="line">OK</div><div class="line">2	ee	cn</div><div class="line">4	ff	cn</div><div class="line">Time taken: 1.124 seconds, Fetched: 2 row(s)</div></pre></td></tr></table></figure></p>
+<p><strong>MAP</strong><br>MAP是一组键值对的组合，可以通过KEY访问VALUE，键值之间同样要在创建表时指定分隔符。<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">CREATE TABLE IF NOT EXISTS map_1 (id int,name map&lt;STRING,STRING&gt;)</div><div class="line">ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' </div><div class="line">COLLECTION ITEMS TERMINATED BY ':' </div><div class="line">MAP KEYS TERMINATED BY ':'</div><div class="line">STORED AS TEXTFILE;</div><div class="line"></div><div class="line">加载数据</div><div class="line">LOAD DATA LOCAL INPATH '/data/test_map.txt' OVERWRITE INTO TABLE map_1;</div><div class="line"></div><div class="line">查询数据</div><div class="line">hive&gt; select * from map_1;</div><div class="line">OK</div><div class="line">1	&#123;"name":"dd","country":"jp"&#125;</div><div class="line">2	&#123;"name":"ee","country":"cn"&#125;</div><div class="line">3	&#123;"name":"gg","country":"jp"&#125;</div><div class="line">4	&#123;"name":"ff","country":"cn"&#125;</div><div class="line">5	&#123;"name":"tt","country":"jp"&#125;</div><div class="line">Time taken: 0.038 seconds, Fetched: 5 row(s)</div><div class="line"></div><div class="line">select id,info['name'],info['country'] from map_1 where info['country']='cn';</div><div class="line">OK</div><div class="line">2	ee	cn</div><div class="line">4	ff	cn</div><div class="line">Time taken: 1.088 seconds, Fetched: 2 row(s)</div></pre></td></tr></table></figure></p>
+<p><strong>UINON TYPES</strong><br>Hive除了支持STRUCT、ARRAY、MAP这些原生集合类型，还支持集合的组合，不支持集合里再组合多个集合。<br>简单示例MAP嵌套ARRAY，手动设置集合格式的数据非常麻烦，建议采用INSERT INTO SELECT 形式构造数据再插入UNION表。<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line">创建DUAL表，插入一条记录，用于生成数据</div><div class="line">create table dual(d string);</div><div class="line">insert into dual values('X');</div><div class="line"></div><div class="line">创建UNION表</div><div class="line">CREATE TABLE IF NOT EXISTS uniontype_1 </div><div class="line">(</div><div class="line">id int,</div><div class="line">info map&lt;STRING,array&lt;STRING&gt;&gt;</div><div class="line">)</div><div class="line">ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' </div><div class="line">COLLECTION ITEMS TERMINATED BY '-'</div><div class="line">MAP KEYS TERMINATED BY ':'</div><div class="line">STORED AS TEXTFILE;</div><div class="line"></div><div class="line">插入数据</div><div class="line">insert overwrite table uniontype_1</div><div class="line">select 1 as id,map('english',array(99,21,33)) as info from dual</div><div class="line">union all</div><div class="line">select 2 as id,map('english',array(44,33,76)) as info from dual</div><div class="line">union all</div><div class="line">select 3 as id,map('english',array(76,88,66)) as info from dual;</div><div class="line"></div><div class="line">查询数据</div><div class="line">hive&gt; select * from uniontype_1;</div><div class="line">OK</div><div class="line">3	&#123;"german":[76,88,66]&#125;</div><div class="line">2	&#123;"chinese":[44,33,76]&#125;</div><div class="line">1	&#123;"english":[99,21,33]&#125;</div><div class="line">Time taken: 0.033 seconds, Fetched: 3 row(s)</div><div class="line"></div><div class="line">hive&gt; select * from uniontype_1 where info['english'][2]&gt;30;</div><div class="line">OK</div><div class="line">1	&#123;"english":[99,21,33]&#125;</div><div class="line">Time taken: 1.08 seconds, Fetched: 1 row(s)</div></pre></td></tr></table></figure></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/12/08/hello-world/" rel="next" title="Hello World">
+                <i class="fa fa-chevron-left"></i> Hello World
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/12/08/Hive基础-创建数据库-创建表/" rel="prev" title="Hive基础-创建数据库-创建表">
+                Hive基础-创建数据库-创建表 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/12/08/Hive基础-数据类型/"
+           data-title="Hive基础-数据类型" data-url="http://yoursite.com/2016/12/08/Hive基础-数据类型/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="呆子萌的" />
+          <p class="site-author-name" itemprop="name">呆子萌的</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">4</span>
+              <span class="site-state-item-name">Artikel</span>
+            </a>
+          </div>
+
+          
+
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">呆子萌的</span>
+</div>
+
+
+<div class="powered-by">
+  Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"yijh"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>

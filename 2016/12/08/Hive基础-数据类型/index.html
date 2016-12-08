@@ -85,18 +85,111 @@
 
 
 <meta name="description" content="Hive既有大多数关系数据库中的基本类型，又有集合这种复杂类型。
-##基本类型数据类型 | 大小 | 范围 | 示例—|—|—|—TINYINT | 1byte | -128 ~ 127 | 100YSMALLINT | 2byte | -32,768 ~ 32,767 | 100SINT/INTEGER | 4byte | -2,147,483,648 ~ 2,147,483,647 | 100">
+基本类型
+
+
+数据类型
+大小
+范围
+示例
+
+
+
+
+TINYINT
+1byte
+-128 ~ 127
+100Y
+
+
+SMALLINT
+2byte
+-32,768 ~ 32,767
+100S 
+
+
+INT/INTEGER
+4byte
+-2,147,483,648 ~ 2,147,483,647
+100
+
+
+BIGINT
+8byte
+-9">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Hive基础-数据类型">
 <meta property="og:url" content="http://yoursite.com/2016/12/08/Hive基础-数据类型/index.html">
 <meta property="og:site_name" content="呆子萌的">
 <meta property="og:description" content="Hive既有大多数关系数据库中的基本类型，又有集合这种复杂类型。
-##基本类型数据类型 | 大小 | 范围 | 示例—|—|—|—TINYINT | 1byte | -128 ~ 127 | 100YSMALLINT | 2byte | -32,768 ~ 32,767 | 100SINT/INTEGER | 4byte | -2,147,483,648 ~ 2,147,483,647 | 100">
-<meta property="og:updated_time" content="2016-12-08T07:42:21.453Z">
+基本类型
+
+
+数据类型
+大小
+范围
+示例
+
+
+
+
+TINYINT
+1byte
+-128 ~ 127
+100Y
+
+
+SMALLINT
+2byte
+-32,768 ~ 32,767
+100S 
+
+
+INT/INTEGER
+4byte
+-2,147,483,648 ~ 2,147,483,647
+100
+
+
+BIGINT
+8byte
+-9">
+<meta property="og:updated_time" content="2016-12-08T15:09:36.685Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hive基础-数据类型">
 <meta name="twitter:description" content="Hive既有大多数关系数据库中的基本类型，又有集合这种复杂类型。
-##基本类型数据类型 | 大小 | 范围 | 示例—|—|—|—TINYINT | 1byte | -128 ~ 127 | 100YSMALLINT | 2byte | -32,768 ~ 32,767 | 100SINT/INTEGER | 4byte | -2,147,483,648 ~ 2,147,483,647 | 100">
+基本类型
+
+
+数据类型
+大小
+范围
+示例
+
+
+
+
+TINYINT
+1byte
+-128 ~ 127
+100Y
+
+
+SMALLINT
+2byte
+-32,768 ~ 32,767
+100S 
+
+
+INT/INTEGER
+4byte
+-2,147,483,648 ~ 2,147,483,647
+100
+
+
+BIGINT
+8byte
+-9">
 
 
 
@@ -322,16 +415,85 @@
 
       
         <p>Hive既有大多数关系数据库中的基本类型，又有集合这种复杂类型。</p>
-<p>##基本类型<br>数据类型 | 大小 | 范围 | 示例<br>—|—|—|—<br>TINYINT | 1byte | -128 ~ 127 | 100Y<br>SMALLINT | 2byte | -32,768 ~ 32,767 | 100S<br>INT/INTEGER | 4byte | -2,147,483,648 ~ 2,147,483,647 | 100<br>BIGINT | 8byte |  -9,223,372,036,854,775,808 ~  9,223,372,036,854,775,807 | 100L<br>FLOAT | 4byte | 单精度浮点数 | 3.1415926<br>DOUBLE | 8byte | 双精度浮点数 | 3.1415926<br>DECIMAL | - | 高精度浮点数 | DECIMAL(9,8)<br>BOOLEAN | - | 布尔型，TRUE/FALSE | true<br>BINARY | - | 二进制类型 | -</p>
-<p>###数字类型</p>
-<p>####整数类型<br>-2,147,483,648 ~ 2,147,483,647之间的整数类型默认是INT型，除非指定了格式100Y、100S、100L会自动转换为TINYINT、SMALLINT、BIGINT</p>
-<p>####浮点数类型<br>浮点数默认会当作DOUBLE型；<br>Hive中的DECIMAL基于Java中的BigDecimal，BigDecimal用于表示任意精度的不可修改的十进制数字；<br>DECIMAL不指定精度时默认为DECIMAL(10,0)；</p>
-<p>###字符串类型<br><strong>String</strong><br>string类型可以用单引号（’）或双引号（”）定义，Hive在string中使用C-style。<br><strong>Varchar</strong><br>varchar类型由长度定义，范围为1-65355，如果存入的字符串长度超过了定义的长度，超出部分会被截断。尾部的空格也会作为字符串的一部分，影响字符串的比较。<br><strong>Char</strong><br>char是固定长度的，最大长度255，而且尾部的空格不影响字符串的比较。<br>三种类型对尾部空格的区别，参考如下例子，每个字段都插入同样的字符并且在尾部有不同的空格。<br> <figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">create</span> <span class="keyword">table</span> char_a (c1 <span class="built_in">char</span>(<span class="number">4</span>),c2 <span class="built_in">char</span>(<span class="number">5</span>),str1 <span class="keyword">string</span>,str2 <span class="keyword">string</span>,var1 <span class="built_in">varchar</span>(<span class="number">4</span>),var2 <span class="built_in">varchar</span>(<span class="number">6</span>));</div><div class="line"><span class="keyword">insert</span> <span class="keyword">into</span> char_a <span class="keyword">values</span>(<span class="string">'ccc '</span>,<span class="string">'ccc  '</span>,<span class="string">'ccc '</span>,<span class="string">'ccc    '</span>,<span class="string">'ccc '</span>,<span class="string">'ccc   '</span>);</div><div class="line"><span class="keyword">select</span> c1=c2,str1=str2,var1=var2 <span class="keyword">from</span> char_a;</div><div class="line"></div><div class="line">OK</div><div class="line">true	false	false</div><div class="line">Time taken: 1.101 seconds, Fetched: 1 row(s)</div></pre></td></tr></table></figure></p>
-<p>###日期与时间戳<br><strong>Timestamps</strong><br>timestamp表示UTC时间，可以是以秒为单位的整数；带精度的浮点数，最大精确到小数点后9位，纳秒级；java.sql.Timestamp格式的字符串 YYYY-MM-DD hh:mm:ss.fffffffff<br><strong>Date</strong><br>Hive中的Date只支持YYYY-MM-DD格式的日期，其余写法都是错误的，如需带上时分秒，请使用timestamp</p>
-<p>##复杂类型<br><strong>STRUCT</strong><br>类似于C、C#语言，Hive中定义的struct类型也可以使用点来访问。从文件加载数据时，文件里的数据分隔符要和建表指定的一致。<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">CREATE TABLE IF NOT EXISTS person_1 (id int,info struct&lt;name:string,country:string&gt;)  </div><div class="line">ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' </div><div class="line">COLLECTION ITEMS TERMINATED BY ':' </div><div class="line">STORED AS TEXTFILE;</div><div class="line"></div><div class="line">创建一个文本文件test_struct.txt</div><div class="line">1,'dd':'jp'</div><div class="line">2,'ee':'cn'</div><div class="line">3,'gg':'jp'</div><div class="line">4,'ff':'cn'</div><div class="line">5,'tt':'jp'</div><div class="line"></div><div class="line">导入数据</div><div class="line">LOAD DATA LOCAL INPATH '/data/test_struct.txt' OVERWRITE INTO TABLE person_1;</div><div class="line"></div><div class="line">查询数据</div><div class="line">hive&gt; select * from person_1;</div><div class="line">OK</div><div class="line">1	&#123;"name":"'dd'","country":"'jp'"&#125;</div><div class="line">2	&#123;"name":"'ee'","country":"'cn'"&#125;</div><div class="line">3	&#123;"name":"'gg'","country":"'jp'"&#125;</div><div class="line">4	&#123;"name":"'ff'","country":"'cn'"&#125;</div><div class="line">5	&#123;"name":"'tt'","country":"'jp'"&#125;</div><div class="line">Time taken: 0.046 seconds, Fetched: 5 row(s)</div><div class="line"></div><div class="line">hive&gt; select id,info.name,info.country from person_1 where info.name='dd';</div><div class="line">OK</div><div class="line">1	dd	jp</div><div class="line">Time taken: 1.166 seconds, Fetched: 1 row(s)</div></pre></td></tr></table></figure></p>
-<p><strong>ARRAY</strong><br>ARRAY表示一组相同数据类型的集合，下标从零开始，可以用下标访问<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">CREATE TABLE IF NOT EXISTS array_1 (id int,name array&lt;STRING&gt;)</div><div class="line">ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' </div><div class="line">COLLECTION ITEMS TERMINATED BY ':' </div><div class="line">STORED AS TEXTFILE;</div><div class="line"></div><div class="line">导入数据</div><div class="line">LOAD DATA LOCAL INPATH '/data/test_array.txt' OVERWRITE INTO TABLE array_1;</div><div class="line"></div><div class="line">查询数据</div><div class="line">hive&gt; select * from array_1;</div><div class="line">OK</div><div class="line">1	["dd","jp"]</div><div class="line">2	["ee","cn"]</div><div class="line">3	["gg","jp"]</div><div class="line">4	["ff","cn"]</div><div class="line">5	["tt","jp"]</div><div class="line">Time taken: 0.041 seconds, Fetched: 5 row(s)</div><div class="line"></div><div class="line">hive&gt; select id,name[0],name[1] from array_1 where name[1]='cn';</div><div class="line">OK</div><div class="line">2	ee	cn</div><div class="line">4	ff	cn</div><div class="line">Time taken: 1.124 seconds, Fetched: 2 row(s)</div></pre></td></tr></table></figure></p>
-<p><strong>MAP</strong><br>MAP是一组键值对的组合，可以通过KEY访问VALUE，键值之间同样要在创建表时指定分隔符。<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">CREATE TABLE IF NOT EXISTS map_1 (id int,name map&lt;STRING,STRING&gt;)</div><div class="line">ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' </div><div class="line">COLLECTION ITEMS TERMINATED BY ':' </div><div class="line">MAP KEYS TERMINATED BY ':'</div><div class="line">STORED AS TEXTFILE;</div><div class="line"></div><div class="line">加载数据</div><div class="line">LOAD DATA LOCAL INPATH '/data/test_map.txt' OVERWRITE INTO TABLE map_1;</div><div class="line"></div><div class="line">查询数据</div><div class="line">hive&gt; select * from map_1;</div><div class="line">OK</div><div class="line">1	&#123;"name":"dd","country":"jp"&#125;</div><div class="line">2	&#123;"name":"ee","country":"cn"&#125;</div><div class="line">3	&#123;"name":"gg","country":"jp"&#125;</div><div class="line">4	&#123;"name":"ff","country":"cn"&#125;</div><div class="line">5	&#123;"name":"tt","country":"jp"&#125;</div><div class="line">Time taken: 0.038 seconds, Fetched: 5 row(s)</div><div class="line"></div><div class="line">select id,info['name'],info['country'] from map_1 where info['country']='cn';</div><div class="line">OK</div><div class="line">2	ee	cn</div><div class="line">4	ff	cn</div><div class="line">Time taken: 1.088 seconds, Fetched: 2 row(s)</div></pre></td></tr></table></figure></p>
-<p><strong>UINON TYPES</strong><br>Hive除了支持STRUCT、ARRAY、MAP这些原生集合类型，还支持集合的组合，不支持集合里再组合多个集合。<br>简单示例MAP嵌套ARRAY，手动设置集合格式的数据非常麻烦，建议采用INSERT INTO SELECT 形式构造数据再插入UNION表。<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line">创建DUAL表，插入一条记录，用于生成数据</div><div class="line">create table dual(d string);</div><div class="line">insert into dual values('X');</div><div class="line"></div><div class="line">创建UNION表</div><div class="line">CREATE TABLE IF NOT EXISTS uniontype_1 </div><div class="line">(</div><div class="line">id int,</div><div class="line">info map&lt;STRING,array&lt;STRING&gt;&gt;</div><div class="line">)</div><div class="line">ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' </div><div class="line">COLLECTION ITEMS TERMINATED BY '-'</div><div class="line">MAP KEYS TERMINATED BY ':'</div><div class="line">STORED AS TEXTFILE;</div><div class="line"></div><div class="line">插入数据</div><div class="line">insert overwrite table uniontype_1</div><div class="line">select 1 as id,map('english',array(99,21,33)) as info from dual</div><div class="line">union all</div><div class="line">select 2 as id,map('english',array(44,33,76)) as info from dual</div><div class="line">union all</div><div class="line">select 3 as id,map('english',array(76,88,66)) as info from dual;</div><div class="line"></div><div class="line">查询数据</div><div class="line">hive&gt; select * from uniontype_1;</div><div class="line">OK</div><div class="line">3	&#123;"german":[76,88,66]&#125;</div><div class="line">2	&#123;"chinese":[44,33,76]&#125;</div><div class="line">1	&#123;"english":[99,21,33]&#125;</div><div class="line">Time taken: 0.033 seconds, Fetched: 3 row(s)</div><div class="line"></div><div class="line">hive&gt; select * from uniontype_1 where info['english'][2]&gt;30;</div><div class="line">OK</div><div class="line">1	&#123;"english":[99,21,33]&#125;</div><div class="line">Time taken: 1.08 seconds, Fetched: 1 row(s)</div></pre></td></tr></table></figure></p>
+<h2 id="基本类型"><a href="#基本类型" class="headerlink" title="基本类型"></a>基本类型</h2><table>
+<thead>
+<tr>
+<th>数据类型</th>
+<th>大小</th>
+<th>范围</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>TINYINT</td>
+<td>1byte</td>
+<td>-128 ~ 127</td>
+<td>100Y</td>
+</tr>
+<tr>
+<td>SMALLINT</td>
+<td>2byte</td>
+<td>-32,768 ~ 32,767</td>
+<td>100S </td>
+</tr>
+<tr>
+<td>INT/INTEGER</td>
+<td>4byte</td>
+<td>-2,147,483,648 ~ 2,147,483,647</td>
+<td>100</td>
+</tr>
+<tr>
+<td>BIGINT</td>
+<td>8byte</td>
+<td>-9,223,372,036,854,775,808 ~  9,223,372,036,854,775,807</td>
+<td>100L</td>
+</tr>
+<tr>
+<td>FLOAT</td>
+<td>4byte</td>
+<td>单精度浮点数</td>
+<td>3.1415926</td>
+</tr>
+<tr>
+<td>DOUBLE</td>
+<td>8byte</td>
+<td>双精度浮点数</td>
+<td>3.1415926</td>
+</tr>
+<tr>
+<td>DECIMAL</td>
+<td>-</td>
+<td>高精度浮点数</td>
+<td>DECIMAL(9,8)</td>
+</tr>
+<tr>
+<td>BOOLEAN</td>
+<td>-</td>
+<td>布尔型，TRUE/FALSE</td>
+<td>true</td>
+</tr>
+<tr>
+<td>BINARY</td>
+<td>-</td>
+<td>二进制类型</td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+<h3 id="数字类型"><a href="#数字类型" class="headerlink" title="数字类型"></a>数字类型</h3><h4 id="整数类型"><a href="#整数类型" class="headerlink" title="整数类型"></a>整数类型</h4><p>-2,147,483,648 ~ 2,147,483,647之间的整数类型默认是INT型，除非指定了格式100Y、100S、100L会自动转换为TINYINT、SMALLINT、BIGINT</p>
+<h4 id="浮点数类型"><a href="#浮点数类型" class="headerlink" title="浮点数类型"></a>浮点数类型</h4><p>浮点数默认会当作DOUBLE型；<br>Hive中的DECIMAL基于Java中的BigDecimal，BigDecimal用于表示任意精度的不可修改的十进制数字；<br>DECIMAL不指定精度时默认为DECIMAL(10,0)；</p>
+<h3 id="字符串类型"><a href="#字符串类型" class="headerlink" title="字符串类型"></a>字符串类型</h3><p><strong>String</strong><br>string类型可以用单引号（’）或双引号（”）定义，Hive在string中使用C-style。<br><strong>Varchar</strong><br>varchar类型由长度定义，范围为1-65355，如果存入的字符串长度超过了定义的长度，超出部分会被截断。尾部的空格也会作为字符串的一部分，影响字符串的比较。<br><strong>Char</strong><br>char是固定长度的，最大长度255，而且尾部的空格不影响字符串的比较。<br>三种类型对尾部空格的区别，参考如下例子，每个字段都插入同样的字符并且在尾部有不同的空格。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">create</span> <span class="keyword">table</span> char_a (c1 <span class="built_in">char</span>(<span class="number">4</span>),c2 <span class="built_in">char</span>(<span class="number">5</span>),str1 <span class="keyword">string</span>,str2 <span class="keyword">string</span>,var1 <span class="built_in">varchar</span>(<span class="number">4</span>),var2 <span class="built_in">varchar</span>(<span class="number">6</span>));</div><div class="line"><span class="keyword">insert</span> <span class="keyword">into</span> char_a <span class="keyword">values</span>(<span class="string">'ccc '</span>,<span class="string">'ccc  '</span>,<span class="string">'ccc '</span>,<span class="string">'ccc    '</span>,<span class="string">'ccc '</span>,<span class="string">'ccc   '</span>);</div><div class="line"><span class="keyword">select</span> c1=c2,str1=str2,var1=var2 <span class="keyword">from</span> char_a;</div><div class="line"></div><div class="line">OK</div><div class="line">true	false	false</div><div class="line">Time taken: 1.101 seconds, Fetched: 1 row(s)</div></pre></td></tr></table></figure>
+<h3 id="日期与时间戳"><a href="#日期与时间戳" class="headerlink" title="日期与时间戳"></a>日期与时间戳</h3><p><strong>Timestamps</strong><br>timestamp表示UTC时间，可以是以秒为单位的整数；带精度的浮点数，最大精确到小数点后9位，纳秒级；java.sql.Timestamp格式的字符串 YYYY-MM-DD hh:mm:ss.fffffffff<br><strong>Date</strong><br>Hive中的Date只支持YYYY-MM-DD格式的日期，其余写法都是错误的，如需带上时分秒，请使用timestamp</p>
+<h2 id="复杂类型"><a href="#复杂类型" class="headerlink" title="复杂类型"></a>复杂类型</h2><p><strong>STRUCT</strong><br>类似于C、C#语言，Hive中定义的struct类型也可以使用点来访问。从文件加载数据时，文件里的数据分隔符要和建表指定的一致。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">CREATE TABLE IF NOT EXISTS person_1 (id int,info struct&lt;name:string,country:string&gt;)  </div><div class="line">ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' </div><div class="line">COLLECTION ITEMS TERMINATED BY ':' </div><div class="line">STORED AS TEXTFILE;</div><div class="line"></div><div class="line">创建一个文本文件test_struct.txt</div><div class="line">1,'dd':'jp'</div><div class="line">2,'ee':'cn'</div><div class="line">3,'gg':'jp'</div><div class="line">4,'ff':'cn'</div><div class="line">5,'tt':'jp'</div><div class="line"></div><div class="line">导入数据</div><div class="line">LOAD DATA LOCAL INPATH '/data/test_struct.txt' OVERWRITE INTO TABLE person_1;</div><div class="line"></div><div class="line">查询数据</div><div class="line">hive&gt; select * from person_1;</div><div class="line">OK</div><div class="line">1	&#123;"name":"'dd'","country":"'jp'"&#125;</div><div class="line">2	&#123;"name":"'ee'","country":"'cn'"&#125;</div><div class="line">3	&#123;"name":"'gg'","country":"'jp'"&#125;</div><div class="line">4	&#123;"name":"'ff'","country":"'cn'"&#125;</div><div class="line">5	&#123;"name":"'tt'","country":"'jp'"&#125;</div><div class="line">Time taken: 0.046 seconds, Fetched: 5 row(s)</div><div class="line"></div><div class="line">hive&gt; select id,info.name,info.country from person_1 where info.name='dd';</div><div class="line">OK</div><div class="line">1	dd	jp</div><div class="line">Time taken: 1.166 seconds, Fetched: 1 row(s)</div></pre></td></tr></table></figure>
+<p><strong>ARRAY</strong><br>ARRAY表示一组相同数据类型的集合，下标从零开始，可以用下标访问</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">CREATE TABLE IF NOT EXISTS array_1 (id int,name array&lt;STRING&gt;)</div><div class="line">ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' </div><div class="line">COLLECTION ITEMS TERMINATED BY ':' </div><div class="line">STORED AS TEXTFILE;</div><div class="line"></div><div class="line">导入数据</div><div class="line">LOAD DATA LOCAL INPATH '/data/test_array.txt' OVERWRITE INTO TABLE array_1;</div><div class="line"></div><div class="line">查询数据</div><div class="line">hive&gt; select * from array_1;</div><div class="line">OK</div><div class="line">1	["dd","jp"]</div><div class="line">2	["ee","cn"]</div><div class="line">3	["gg","jp"]</div><div class="line">4	["ff","cn"]</div><div class="line">5	["tt","jp"]</div><div class="line">Time taken: 0.041 seconds, Fetched: 5 row(s)</div><div class="line"></div><div class="line">hive&gt; select id,name[0],name[1] from array_1 where name[1]='cn';</div><div class="line">OK</div><div class="line">2	ee	cn</div><div class="line">4	ff	cn</div><div class="line">Time taken: 1.124 seconds, Fetched: 2 row(s)</div></pre></td></tr></table></figure>
+<p><strong>MAP</strong><br>MAP是一组键值对的组合，可以通过KEY访问VALUE，键值之间同样要在创建表时指定分隔符。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">CREATE TABLE IF NOT EXISTS map_1 (id int,name map&lt;STRING,STRING&gt;)</div><div class="line">ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' </div><div class="line">COLLECTION ITEMS TERMINATED BY ':' </div><div class="line">MAP KEYS TERMINATED BY ':'</div><div class="line">STORED AS TEXTFILE;</div><div class="line"></div><div class="line">加载数据</div><div class="line">LOAD DATA LOCAL INPATH '/data/test_map.txt' OVERWRITE INTO TABLE map_1;</div><div class="line"></div><div class="line">查询数据</div><div class="line">hive&gt; select * from map_1;</div><div class="line">OK</div><div class="line">1	&#123;"name":"dd","country":"jp"&#125;</div><div class="line">2	&#123;"name":"ee","country":"cn"&#125;</div><div class="line">3	&#123;"name":"gg","country":"jp"&#125;</div><div class="line">4	&#123;"name":"ff","country":"cn"&#125;</div><div class="line">5	&#123;"name":"tt","country":"jp"&#125;</div><div class="line">Time taken: 0.038 seconds, Fetched: 5 row(s)</div><div class="line"></div><div class="line">select id,info['name'],info['country'] from map_1 where info['country']='cn';</div><div class="line">OK</div><div class="line">2	ee	cn</div><div class="line">4	ff	cn</div><div class="line">Time taken: 1.088 seconds, Fetched: 2 row(s)</div></pre></td></tr></table></figure>
+<p><strong>UINON TYPES</strong><br>Hive除了支持STRUCT、ARRAY、MAP这些原生集合类型，还支持集合的组合，不支持集合里再组合多个集合。<br>简单示例MAP嵌套ARRAY，手动设置集合格式的数据非常麻烦，建议采用INSERT INTO SELECT 形式构造数据再插入UNION表。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line">创建DUAL表，插入一条记录，用于生成数据</div><div class="line">create table dual(d string);</div><div class="line">insert into dual values('X');</div><div class="line"></div><div class="line">创建UNION表</div><div class="line">CREATE TABLE IF NOT EXISTS uniontype_1 </div><div class="line">(</div><div class="line">id int,</div><div class="line">info map&lt;STRING,array&lt;STRING&gt;&gt;</div><div class="line">)</div><div class="line">ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' </div><div class="line">COLLECTION ITEMS TERMINATED BY '-'</div><div class="line">MAP KEYS TERMINATED BY ':'</div><div class="line">STORED AS TEXTFILE;</div><div class="line"></div><div class="line">插入数据</div><div class="line">insert overwrite table uniontype_1</div><div class="line">select 1 as id,map('english',array(99,21,33)) as info from dual</div><div class="line">union all</div><div class="line">select 2 as id,map('english',array(44,33,76)) as info from dual</div><div class="line">union all</div><div class="line">select 3 as id,map('english',array(76,88,66)) as info from dual;</div><div class="line"></div><div class="line">查询数据</div><div class="line">hive&gt; select * from uniontype_1;</div><div class="line">OK</div><div class="line">3	&#123;"german":[76,88,66]&#125;</div><div class="line">2	&#123;"chinese":[44,33,76]&#125;</div><div class="line">1	&#123;"english":[99,21,33]&#125;</div><div class="line">Time taken: 0.033 seconds, Fetched: 3 row(s)</div><div class="line"></div><div class="line">hive&gt; select * from uniontype_1 where info['english'][2]&gt;30;</div><div class="line">OK</div><div class="line">1	&#123;"english":[99,21,33]&#125;</div><div class="line">Time taken: 1.08 seconds, Fetched: 1 row(s)</div></pre></td></tr></table></figure>
 
       
     </div>
@@ -421,8 +583,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Inhaltsverzeichnis
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Übersicht
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.gif"
@@ -461,6 +632,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本类型"><span class="nav-number">1.</span> <span class="nav-text">基本类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#数字类型"><span class="nav-number">1.1.</span> <span class="nav-text">数字类型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#整数类型"><span class="nav-number">1.1.1.</span> <span class="nav-text">整数类型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#浮点数类型"><span class="nav-number">1.1.2.</span> <span class="nav-text">浮点数类型</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#字符串类型"><span class="nav-number">1.2.</span> <span class="nav-text">字符串类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#日期与时间戳"><span class="nav-number">1.3.</span> <span class="nav-text">日期与时间戳</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#复杂类型"><span class="nav-number">2.</span> <span class="nav-text">复杂类型</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
     </div>

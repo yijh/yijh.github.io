@@ -61,44 +61,6 @@
       <div class="outer">
         <section id="main">
   
-    <article id="post-Hive 创建分区表与桶表" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/12/08/Hive 创建分区表与桶表/" class="article-date">
-  <time datetime="2016-12-08T07:04:40.380Z" itemprop="datePublished">2016-12-08</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p></p><h1 align="center">Hive 创建分区表、桶</h1><br>[TOC]<p></p>
-<h3 id="创建-删除-修改-数据库"><a href="#创建-删除-修改-数据库" class="headerlink" title="创建/删除/修改 数据库"></a>创建/删除/修改 数据库</h3><h4 id="创建数据库"><a href="#创建数据库" class="headerlink" title="创建数据库"></a>创建数据库</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">CREATE</span> (<span class="keyword">DATABASE</span>|<span class="keyword">SCHEMA</span>) [<span class="keyword">IF</span> <span class="keyword">NOT</span> <span class="keyword">EXISTS</span>] database_name</div><div class="line">  [<span class="keyword">COMMENT</span> database_comment]</div><div class="line">  [LOCATION hdfs_path]</div><div class="line">  [<span class="keyword">WITH</span> DBPROPERTIES (property_name=property_value, ...)];</div><div class="line"></div><div class="line">WITH 后可设置KV格式的数据库属性</div></pre></td></tr></table></figure>
-<font color="#53868B"><small><strong>Example：</strong></small></font> 
-
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">CREATE</span> <span class="keyword">DATABASE</span> <span class="keyword">IF</span> <span class="keyword">NOT</span> <span class="keyword">EXISTS</span> <span class="keyword">TEST</span> </div><div class="line">	<span class="keyword">COMMENT</span> <span class="string">'THIS IS TEST DATABASE'</span></div><div class="line">	LOCATION <span class="string">'/USER/ROOT/'</span> </div><div class="line">	<span class="keyword">WITH</span> DBPROPERTIES(<span class="string">'CREATOR'</span>=<span class="string">'XXX'</span>,<span class="string">'DATE'</span>=<span class="string">'2016-11-12'</span>);</div></pre></td></tr></table></figure>
-<h4 id="删除数据库"><a href="#删除数据库" class="headerlink" title="删除数据库"></a>删除数据库</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">DROP</span> (<span class="keyword">DATABASE</span>|<span class="keyword">SCHEMA</span>) [<span class="keyword">IF</span> <span class="keyword">EXISTS</span>] database_name [RESTRICT|<span class="keyword">CASCADE</span>];</div></pre></td></tr></table></figure>
-<p>默认情况下Hive不允许删除表里有数据的数据库，使用CASCADE会在删除数据库时删除该库下的所有对象，RESTRICT既为默认情况设置 </p>
-<h4 id="修改数据库"><a href="#修改数据库" class="headerlink" title="修改数据库"></a>修改数据库</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">ALTER</span> (<span class="keyword">DATABASE</span>|<span class="keyword">SCHEMA</span>) database_name <span class="keyword">SET</span> DBPROPERTIES (property_name=property_value, ...);</div><div class="line"><span class="keyword">ALTER</span> (<span class="keyword">DATABASE</span>|<span class="keyword">SCHEMA</span>) database_name <span class="keyword">SET</span> OWNER [<span class="keyword">USER</span>|<span class="keyword">ROLE</span>] user_or_role;</div></pre></td></tr></table></figure>
-<h3 id="创建删除截断表"><a href="#创建删除截断表" class="headerlink" title="创建删除截断表"></a>创建删除截断表</h3><h4 id="创建表"><a href="#创建表" class="headerlink" title="创建表"></a>创建表</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">CREATE</span> [<span class="keyword">TEMPORARY</span>] [<span class="keyword">EXTERNAL</span>] <span class="keyword">TABLE</span> [<span class="keyword">IF</span> <span class="keyword">NOT</span> <span class="keyword">EXISTS</span>] [db_name.]table_name</div><div class="line">  [(col_name data_type [<span class="keyword">COMMENT</span> col_comment], ...)]</div><div class="line">  [<span class="keyword">COMMENT</span> table_comment]</div><div class="line">  [PARTITIONED <span class="keyword">BY</span> (col_name data_type [<span class="keyword">COMMENT</span> col_comment], ...)]</div><div class="line">  [CLUSTERED <span class="keyword">BY</span> (col_name, col_name, ...) [SORTED <span class="keyword">BY</span> (col_name [<span class="keyword">ASC</span>|<span class="keyword">DESC</span>], ...)] <span class="keyword">INTO</span> num_buckets BUCKETS]</div><div class="line">  [SKEWED <span class="keyword">BY</span> (col_name, col_name, ...)</div><div class="line">     <span class="keyword">ON</span> ((col_value, col_value, ...), (col_value, col_value, ...), ...)</div><div class="line">     [<span class="keyword">STORED</span> <span class="keyword">AS</span> DIRECTORIES]</div><div class="line">  [</div><div class="line">   [<span class="keyword">ROW</span> <span class="keyword">FORMAT</span> row_format] </div><div class="line">   [<span class="keyword">STORED</span> <span class="keyword">AS</span> file_format]</div><div class="line">     | <span class="keyword">STORED</span> <span class="keyword">BY</span> <span class="string">'storage.handler.class.name'</span> [<span class="keyword">WITH</span> SERDEPROPERTIES (...)]</div><div class="line">  ]</div><div class="line">  [LOCATION hdfs_path]</div><div class="line">  [TBLPROPERTIES (property_name=property_value, ...)]</div><div class="line">  [<span class="keyword">AS</span> select_statement];</div></pre></td></tr></table></figure>
-<h5 id="内部表"><a href="#内部表" class="headerlink" title="内部表"></a>内部表</h5><p>表的元数据和数据都由Hive维护，删除表时HDFS上的数据会删除</p>
-<h5 id="外部表（EXTERNAL）"><a href="#外部表（EXTERNAL）" class="headerlink" title="外部表（EXTERNAL）"></a>外部表（EXTERNAL）</h5><p>删除表时只删除元数据，HDFS上的数据保留</p>
-<h5 id="临时表（TEMPORARY）"><a href="#临时表（TEMPORARY）" class="headerlink" title="临时表（TEMPORARY）"></a>临时表（TEMPORARY）</h5><p>临时表只对当前Session有效，Session退出时表自动删除</p>
-<h4 id="删除表"><a href="#删除表" class="headerlink" title="删除表"></a>删除表</h4><h4 id="截断表"><a href="#截断表" class="headerlink" title="截断表"></a>截断表</h4>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/12/08/Hive 创建分区表与桶表/" data-id="ciwg0qtuk0000wstwieavuqm5" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
     <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2016/12/08/hello-world/" class="article-date">
@@ -134,7 +96,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/12/08/hello-world/" data-id="ciwg0qtuv0001wstwqu69zunj" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/12/08/hello-world/" data-id="ciwg11ayx0000k8twhh459hnq" class="article-share-link">Share</a>
       
       
     </footer>
@@ -172,10 +134,6 @@
     <h3 class="widget-title">最新文章</h3>
     <div class="widget">
       <ul>
-        
-          <li>
-            <a href="/2016/12/08/Hive 创建分区表与桶表/">(no title)</a>
-          </li>
         
           <li>
             <a href="/2016/12/08/hello-world/">Hello World</a>

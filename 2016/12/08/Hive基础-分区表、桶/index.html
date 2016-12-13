@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="Hive," />
 
 
 
@@ -90,7 +90,7 @@
 <meta property="og:url" content="http://yoursite.com/2016/12/08/Hive基础-分区表、桶/index.html">
 <meta property="og:site_name" content="呆子萌的">
 <meta property="og:description" content="分区表Hive中没有复杂的分区类型（List,Range,Hash）、各种复合分区，分区列不是表中的实际字段而是一个伪列，创建表时可以指定PARTITION BY 子句创建一个或多个分区，每个分区在HDFS中会自动创建一个独立的文件夹。分区键不能和列名同名，不然会报 “FAILED: Error in semantic analysis: Column repeated in partitioni">
-<meta property="og:updated_time" content="2016-12-08T15:02:56.585Z">
+<meta property="og:updated_time" content="2016-12-13T02:45:08.750Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hive基础-分区表、桶">
 <meta name="twitter:description" content="分区表Hive中没有复杂的分区类型（List,Range,Hash）、各种复合分区，分区列不是表中的实际字段而是一个伪列，创建表时可以指定PARTITION BY 子句创建一个或多个分区，每个分区在HDFS中会自动创建一个独立的文件夹。分区键不能和列名同名，不然会报 “FAILED: Error in semantic analysis: Column repeated in partitioni">
@@ -102,7 +102,7 @@
   var CONFIG = {
     root: '/',
     scheme: 'Mist',
-    sidebar: {"position":"right","display":"post"},
+    sidebar: {"position":"left","display":"always"},
     fancybox: true,
     motion: true,
     duoshuo: {
@@ -148,7 +148,7 @@
     
   
 
-  <div class="container one-collumn sidebar-position-right page-post-detail ">
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -263,7 +263,7 @@
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="呆子萌的">
     <meta itemprop="description" content="">
-    <meta itemprop="image" content="/images/avatar.gif">
+    <meta itemprop="image" content="http://ogtt1b641.bkt.clouddn.com/public/16-12-9/99088983.jpg">
   </span>
 
   <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -305,6 +305,24 @@
             
           </span>
 
+          
+            <span class="post-category" >
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Hive/" itemprop="url" rel="index">
+                    <span itemprop="name">Hive</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -387,6 +405,12 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/Hive/" rel="tag"># Hive</a>
+          
+        </div>
+      
 
       
         <div class="post-nav">
@@ -464,7 +488,7 @@
       <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
-               src="/images/avatar.gif"
+               src="http://ogtt1b641.bkt.clouddn.com/public/16-12-9/99088983.jpg"
                alt="呆子萌的" />
           <p class="site-author-name" itemprop="name">呆子萌的</p>
           <p class="site-description motion-element" itemprop="description"></p>
@@ -472,13 +496,27 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">4</span>
+              <span class="site-state-item-count">3</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
 
           
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
 
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
           
 
         </nav>
